@@ -39,7 +39,10 @@ export var Dogs = [
 
 ]
 
-export function getOwners(): Owner[] {
+export function getOwners(name?: string): Owner[] {
+    if (name != null) {
+        return Owners.filter(owner => owner.name == name)
+    }
     return Owners
 }
 

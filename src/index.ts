@@ -8,9 +8,10 @@ const app = new Koa();
 const router = new Router();
 
 router.get('/api/owner', (ctx, next) => {
-    var msg = new Message()
-    msg.data = Mockdb.Owners
-    ctx.body = msg
+    const {name} = ctx.request.query;
+    var msg = new Message();
+    msg.data = Mockdb.getOwners(name);
+    ctx.body = msg;
 });
 
 
@@ -18,11 +19,10 @@ router.get('/api/owner/:id', (ctx, next) => {
     const id: number = ctx.params['id'];
     const found = Mockdb.getOwnerById(id);
 
-    var msg = new Message()
-    msg.data = found
-    ctx.body = msg
+    var msg = new Message();
+    msg.data = found;
+    ctx.body = msg;
     console.log(msg);
-
 });
 
 
