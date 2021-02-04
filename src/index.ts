@@ -36,6 +36,12 @@ router.post('/api/owner', (ctx, next) => {
 });
 
 
+router.post('/api/dog', (ctx, next) => {
+    console.log(ctx.request.body);
+});
+
+
+
 app.use(logger());
 app.use(BodyParser());
 app.use(router.routes());
