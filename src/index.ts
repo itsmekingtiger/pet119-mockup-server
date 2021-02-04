@@ -1,7 +1,8 @@
 import * as Koa from 'koa';
 import * as logger from 'koa-logger';
 import * as Router from 'koa-router';
-import { Message } from './message';
+import * as BodyParser from 'koa-bodyparser';
+import { Message, Owner } from './message';
 import * as  Mockdb from './mockdb';
 
 const app = new Koa();
@@ -9,9 +10,13 @@ const router = new Router();
 
 router.get('/api/owner', (ctx, next) => {
     const {name} = ctx.request.query;
+    console.log(`name: ${name}`);
+    
     var msg = new Message();
     msg.data = Mockdb.getOwners(name);
     ctx.body = msg;
+
+    console.log(msg);
 });
 
 
@@ -22,11 +27,17 @@ router.get('/api/owner/:id', (ctx, next) => {
     var msg = new Message();
     msg.data = found;
     ctx.body = msg;
+
     console.log(msg);
+});
+
+router.post('/api/owner', (ctx, next) => {
+    console.log(ctx.request.body);
 });
 
 
 app.use(logger());
+app.use(BodyParser());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
